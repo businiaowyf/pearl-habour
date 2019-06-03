@@ -37,6 +37,29 @@ func algo2(n int, matrix [][]uint32) [][]uint32 {
 	return matrix
 }
 
+func s(a *uint32, b *uint32) {
+	t := *b
+	*b = *a
+	*a = t
+}
+
+func algo3(n int, matrix [][]uint32) [][]uint32 {
+	for i := 0; i < n; i++ {
+		for j := 0; j < n-i; j++ {
+			s(&matrix[i][j], &matrix[n-1-j][n-1-i])
+		}
+	}
+
+	fmt.Println(matrix)
+
+	for i := 0; i < n/2; i++ {
+		for j := 0; j < n; j++ {
+			s(&matrix[i][j], &matrix[n-1-i][j])
+		}
+	}
+	return matrix
+}
+
 func swap(matrix [][]uint32, start *Point, end *Point) {
 	for i := 0; i < int(end.Y-start.Y); i++ {
 		var tmp uint32
@@ -69,6 +92,9 @@ func main() {
 	result := algo1(n, matrix)
 	fmt.Println("algorithm1:", result)
 
-	result = algo2(n, matrix)
-	fmt.Println("algorithm2:", result)
+	result = algo3(n, matrix)
+	fmt.Println("algorithm3:", result)
+
+	//result = algo2(n, matrix)
+	//fmt.Println("algorithm2:", result)
 }
